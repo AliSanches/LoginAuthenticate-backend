@@ -18,6 +18,22 @@ class UserService {
 
     return query;
   }
+
+  async login(email: string, password: string) {
+    const mail = await prisma.user.findUnique({
+      where: {
+        email: email,
+      },
+    });
+
+    if (!mail) {
+      return false;
+    }
+
+    if (mail?.password === password) {
+      return mail;
+    }
+  }
 }
 
 module.exports = UserService;
