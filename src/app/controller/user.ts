@@ -28,6 +28,6 @@ export async function login(req: Request, res: Response) {
   if (response) {
     res.status(200).json(response);
   } else {
-    res.status(204).json();
+    res.status(401).json(response);
   }
 }
