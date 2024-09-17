@@ -1,4 +1,5 @@
 import { PrismaClient } from "@prisma/client";
+import jwt from "jsonwebtoken";
 
 const prisma = new PrismaClient();
 
@@ -31,7 +32,11 @@ class UserService {
     }
 
     if (mail?.password === password) {
-      return mail;
+      const token = await jwt.sign({ email }, "configuracaoAplicacao");
+      return {
+        token,
+        mail,
+      };
     }
   }
 }
