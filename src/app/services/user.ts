@@ -39,6 +39,20 @@ class UserService {
       };
     }
   }
+
+  async welcome(idUser: number) {
+    const data = await prisma.user.findUnique({
+      where: {
+        id: idUser,
+      },
+      select: {
+        name: true,
+        email: true,
+      },
+    });
+
+    return data;
+  }
 }
 
 module.exports = UserService;

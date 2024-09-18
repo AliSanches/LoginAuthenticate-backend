@@ -9,11 +9,7 @@ export async function register(req: Request, res: Response) {
 
   const response = await dao.register(dataUser);
 
-  if (response) {
-    res.status(200).json(response);
-  } else {
-    res.status(204).json();
-  }
+  res.status(201).json(response);
 }
 
 export async function login(req: Request, res: Response) {
@@ -25,9 +21,17 @@ export async function login(req: Request, res: Response) {
 
   console.log(response);
 
-  if (response) {
-    res.status(200).json(response);
-  } else {
-    res.status(401).json(response);
-  }
+  res.status(200).json(response);
+}
+
+export async function welcome(req: Request, res: Response) {
+  const { id } = req.params;
+
+  const dao = new UserService();
+
+  const response = await dao.welcome(+id);
+
+  console.log(response);
+
+  res.status(200).json(response);
 }
