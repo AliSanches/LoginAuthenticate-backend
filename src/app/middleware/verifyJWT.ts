@@ -7,9 +7,7 @@ export const verifyJWT = (
   next: NextFunction
 ): void => {
   try {
-    console.log(req.headers);
-    const header = req.headers.authorization;
-    console.log(header);
+    const header = req.headers["authorization"];
 
     if (!header) {
       res.status(401).json("Unauthorized request");
@@ -17,7 +15,6 @@ export const verifyJWT = (
     }
 
     const token = header.split(" ")[1];
-    console.log(token);
     const decoded = jwt.verify(token, "configuracaoAplicacao");
     (req as any).user = decoded;
 

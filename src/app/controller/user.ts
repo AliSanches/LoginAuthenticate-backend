@@ -19,8 +19,6 @@ export async function login(req: Request, res: Response) {
 
   const response = await dao.login(email, password);
 
-  console.log(response);
-
   res.status(200).json(response);
 }
 
@@ -30,8 +28,6 @@ export async function welcome(req: Request, res: Response) {
   const dao = new UserService();
 
   const response = await dao.welcome(+id);
-
-  console.log(response);
 
   res.status(200).json(response);
 }
