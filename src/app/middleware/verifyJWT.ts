@@ -16,7 +16,7 @@ export const verifyJWT = (
 
     const token = header.split(" ")[1];
     const decoded = jwt.verify(token, "configuracaoAplicacao");
-    (req as any).user = decoded;
+    req.body.id = decoded;
 
     next();
   } catch (err) {

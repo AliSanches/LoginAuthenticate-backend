@@ -11,32 +11,29 @@ interface User {
 
 class UserService {
   async register(data: User) {
-    let query = await prisma.user.create({
-      data: {
-        ...data,
-      },
-    });
+    try {
+      let query = await prisma.user.create({
+        data: {
+          ...data,
+        },
+      });
 
-    return query;
+      return query;
+    } catch {
+      return false;
+    }
   }
 
   async login(email: string, password: string) {
-    const mail = await prisma.user.findUnique({
+    const data = await prisma.user.findUnique({
       where: {
         email: email,
       },
     });
 
-    if (!mail) {
-      return false;
-    }
-
-    if (mail?.password === password) {
-      const token = await jwt.sign({ email }, "configuracaoAplicacao");
-      return {
-        token,
-        mail,
-      };
+    if (data?.password === password) {
+      const token = await jwt.sign({ data }, "configuracaoAplicacao");
+      return { data, token };
     }
   }
 
@@ -48,6 +45,8 @@ class UserService {
       select: {
         name: true,
         email: true,
+        id: false,
+        password: false,
       },
     });
 
